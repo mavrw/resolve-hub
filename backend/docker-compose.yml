@@ -28,7 +28,7 @@ services:
     ports:
       - 42069:8000
     environment:
-      - DATABASE_URL=postgresql://postgres:password@postgres-db/resolve-hub_test
+      - RH_DATABASE_URL=postgresql://postgres:password@postgres-db/resolve-hub_test
     
 
 volumes:
