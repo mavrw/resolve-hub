@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  resolve-hub-db:
+    image: postgres:latest
+    ports:
+      - "42070:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: resolve-hub_test
+
+volumes:
+  postgres_data:
