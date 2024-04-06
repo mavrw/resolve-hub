@@ -14,6 +14,22 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: resolve-hub_test
+  
+  api:
+    image: python:3.10
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: >
+      bash -c "
+        pip install -r api/requirements.txt &&
+        uvicorn api.main:app --host 0.0.0.0 --reload
+      "
+    ports:
+      - 42069:8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres-db/resolve-hub_test
+    
 
 volumes:
   postgres_data:
