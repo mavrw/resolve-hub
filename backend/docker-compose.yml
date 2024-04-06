@@ -1,7 +1,9 @@
 version: '3.8'
 
+name: resolve-hub-backend
+
 services:
-  resolve-hub-db:
+  postgres-db:
     image: postgres:latest
     ports:
       - "42070:5432"
