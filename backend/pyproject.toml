@@ -1,0 +1,14 @@
+[project]
+name = "resolve-hub-backend"
+version = "0.0.1"
+authors = [
+  { name="Matthew Reeder-Willson", email="matt@cyberdelianow.com" },
+]
+description = "Resolve Hub backend API."
+requires-python = ">=3.10"
+
+[project.urls]
+"Homepage" = "https://github.com/mavrw/resolve-hub"
+
+[project.scripts]
+resolve_hub_backend = "api.main:app"
