@@ -1,11 +1,14 @@
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, List, Optional
 from sqlalchemy import Dialect, ForeignKey, String, TypeDecorator
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, declarative_base
 from sqlalchemy.sql.functions import current_timestamp
 from pydantic import EmailStr
 
-from api.data.database import Base
+
+# ==============================================================================
+# Type Decorators
+# ==============================================================================
 
 
 class EmailType(TypeDecorator):
@@ -22,6 +25,14 @@ class EmailType(TypeDecorator):
     def process_result_value(self, value: Any | None, dialect: Dialect) -> Any | None:
         if value is not None:
             return EmailStr(value)
+
+
+# ==============================================================================
+# Models
+# ==============================================================================
+
+
+Base = declarative_base()
 
 
 class Account(Base):
@@ -112,3 +123,18 @@ class IssueBlocker(Base):
 
     def __repr__(self) -> str:
         return f"<IssueBlocker id={self.id}, blocked_issue_id={self.blocked_issue_id}, blocking_issue_id={self.blocking_issue_id}>"
+
+
+class IssueLabel(Base):
+    __tablename__ = "issue_labels"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE")
+    )
+    issue_id: Mapped[int] = mapped_column(ForeignKey("issues.id", ondelete="CASCADE"))
+    text: Mapped[str]
+    color: Mapped[str] = mapped_column(default="#424242")
+
+    def __repr__(self) -> str:
+        return f"<IssueLabel id={self.id} text={self.text} project_id={self.project_id} issue_id={self.issue_id}>"
