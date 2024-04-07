@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+
 from api.routers import (
     accounts,
     issue_blockers,
